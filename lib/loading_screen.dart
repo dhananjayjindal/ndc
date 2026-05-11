@@ -230,46 +230,67 @@ class _LoadingScreenState extends State<LoadingScreen>
                         // ─────────────────────────────────────────────
                         RepaintBoundary(
                           child: Container(
-                            width: logoSize,
-                            height: logoSize,
+                            width:
+                                logoSize +
+                                36,
+                            height:
+                                logoSize +
+                                36,
 
-                            padding: const EdgeInsets.all(20),
+                            padding: const EdgeInsets.all(
+                              10,
+                            ),
 
                             decoration: BoxDecoration(
-                              shape: BoxShape.circle,
+                              borderRadius: BorderRadius.circular(
+                                30,
+                              ),
 
                               gradient: LinearGradient(
                                 begin: Alignment.topLeft,
                                 end: Alignment.bottomRight,
 
                                 colors: [
-                                  Colors.white.withValues(alpha: 0.06),
+                                  Colors.white.withValues(
+                                    alpha: 0.05,
+                                  ),
 
-                                  Colors.white.withValues(alpha: 0.02),
+                                  Colors.white.withValues(
+                                    alpha: 0.015,
+                                  ),
                                 ],
-                              ),
-
-                              border: Border.all(
-                                color: Colors.white.withValues(alpha: 0.04),
                               ),
 
                               boxShadow: [
                                 BoxShadow(
-                                  blurRadius: 18,
+                                  blurRadius: 30,
 
-                                  spreadRadius: -6,
+                                  spreadRadius: -8,
 
-                                  offset: const Offset(0, 10),
+                                  offset: const Offset(
+                                    0,
+                                    14,
+                                  ),
 
-                                  color: Colors.black.withValues(alpha: 0.18),
+                                  color: Colors.black.withValues(
+                                    alpha: 0.22,
+                                  ),
                                 ),
                               ],
                             ),
 
-                            child: Image.asset(
-                              AppImages.logo,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(
+                                22,
+                              ),
 
-                              filterQuality: FilterQuality.low,
+                              child: Image.asset(
+                                AppImages.logo,
+
+                                fit: BoxFit.contain,
+
+                                // filterQuality: FilterQuality.medium,
+                              ),
                             ),
                           ),
                         ),
@@ -369,19 +390,19 @@ class _LoadingScreenState extends State<LoadingScreen>
                         // ─────────────────────────────────────────────
                         // FOOTER
                         // ─────────────────────────────────────────────
-                        Text(
-                          'Powered by NDC',
+                        // Text(
+                        //   'Powered by NDC',
 
-                          style: TextStyle(
-                            color: Colors.white.withValues(alpha: 0.24),
+                        //   style: TextStyle(
+                        //     color: Colors.white.withValues(alpha: 0.24),
 
-                            fontSize: 11,
+                        //     fontSize: 11,
 
-                            letterSpacing: 1.1,
+                        //     letterSpacing: 1.1,
 
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
+                        //     fontWeight: FontWeight.w600,
+                        //   ),
+                        // ),
                       ],
                     ),
                   ),

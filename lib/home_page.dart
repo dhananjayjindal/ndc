@@ -1168,7 +1168,7 @@ showAboutPopup(
 
   String lastUpdated = '-';
 
-  String instaLink = '';
+  String instaLink = '-';
 
   try {
     AppLogger.d(
@@ -1738,58 +1738,132 @@ showQrCodePopup(
                             ),
 
                             // QR IMAGE
+                            // QR IMAGE
                             if (qrImage.isNotEmpty)
+                              Column(
+                                children: [
+                                  Container(
+                                    padding: const EdgeInsets.all(
+                                      10,
+                                    ),
+
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+
+                                      borderRadius: BorderRadius.circular(
+                                        28,
+                                      ),
+
+                                      border: Border.all(
+                                        color: Colors.white.withValues(
+                                          alpha: 0.08,
+                                        ),
+                                      ),
+
+                                      boxShadow: [
+                                        BoxShadow(
+                                          blurRadius: 26,
+
+                                          spreadRadius: 1,
+
+                                          offset: const Offset(
+                                            0,
+                                            12,
+                                          ),
+
+                                          color: Colors.black.withValues(
+                                            alpha: 0.16,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+
+                                    child: SizedBox(
+                                      width: 210,
+                                      height: 210,
+
+                                      child: appImage(
+                                        qrImage,
+
+                                        fit: BoxFit.contain,
+
+                                        borderRadius: BorderRadius.zero,
+                                      ),
+                                    ),
+                                  ),
+
+                                  const SizedBox(
+                                    height: 14,
+                                  ),
+
+                                  Container(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 14,
+                                      vertical: 8,
+                                    ),
+
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(
+                                        30,
+                                      ),
+
+                                      color: Colors.white.withValues(
+                                        alpha: 0.06,
+                                      ),
+                                    ),
+
+                                    child: const Row(
+                                      mainAxisSize: MainAxisSize.min,
+
+                                      children: [
+                                        Icon(
+                                          Icons.qr_code_scanner_rounded,
+                                          size: 18,
+                                          color: Colors.white70,
+                                        ),
+
+                                        SizedBox(
+                                          width: 8,
+                                        ),
+
+                                        Text(
+                                          'Scan & Pay',
+                                          style: TextStyle(
+                                            color: Colors.white70,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              )
+                            // LOADING
+                            else
                               Container(
-                                padding: const EdgeInsets.all(
-                                  18,
-                                ),
+                                width: 210,
+                                height: 210,
+
+                                alignment: Alignment.center,
 
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(
                                     28,
                                   ),
 
-                                  color: Colors.white,
-
-                                  boxShadow: [
-                                    BoxShadow(
-                                      blurRadius: 20,
-
-                                      offset: const Offset(
-                                        0,
-                                        10,
-                                      ),
-
-                                      color: Colors.black.withValues(
-                                        alpha: 0.16,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(
-                                    18,
-                                  ),
-
-                                  child: appImage(
-                                    qrImage,
-
-                                    width: 240,
-                                    height: 240,
-
-                                    fit: BoxFit.cover,
+                                  color: Colors.white.withValues(
+                                    alpha: 0.04,
                                   ),
                                 ),
-                              )
-                            // LOADING
-                            else
-                              const Padding(
-                                padding: EdgeInsets.symmetric(
-                                  vertical: 60,
-                                ),
 
-                                child: CircularProgressIndicator(),
+                                child: const SizedBox(
+                                  width: 28,
+                                  height: 28,
+
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 2.2,
+                                  ),
+                                ),
                               ),
 
                             const SizedBox(

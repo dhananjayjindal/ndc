@@ -20,8 +20,7 @@ class SheetsService {
   // CONFIG
   // ─────────────────────────────────────────────
 
-  static const String spreadsheetId =
-      '1Mrrxkgc_LyHGGuFFbp54id04HGa1YxSUBey3GMveD78';
+  static const String spreadsheetId = '1Mrrxkgc_LyHGGuFFbp54id04HGa1YxSUBey3GMveD78';
 
   // 🔥 YOUR PUBLIC API KEY
   static const String apiKey = 'AIzaSyBw3n4syUIBueNZFfpjxIEwP_53r8OZCOQ';
@@ -246,17 +245,18 @@ class SheetsService {
     }
   }
 
-  // ─────────────────────────────────────────────
-  // MOBILE NUMBER
-  // ─────────────────────────────────────────────
 
+
+  Future<String> fetchDeveloperName() async {
+    return _fetchSingleCell('Splash', 'A1:A1');
+  }
+  Future<String> fetchLastUpdateDate() async {
+    return _fetchSingleCell('Splash', 'A2:A2');
+  }
+  
   Future<String> fetchMobileNumber() async {
     return _fetchSingleCell('Splash', 'A3:A3');
   }
-
-  // ─────────────────────────────────────────────
-  // UPI DATA
-  // ─────────────────────────────────────────────
 
   Future<({String qrImageUrl, String upiId})> fetchUpiData() async {
     try {
@@ -276,25 +276,14 @@ class SheetsService {
     }
   }
 
-  // ─────────────────────────────────────────────
-  // APP META
-  // ─────────────────────────────────────────────
-
-  Future<String> fetchAppMetaDate() async {
-    return _fetchSingleCell('Splash', 'A8:A8');
-  }
-
-  Future<String> fetchAppMetaName() async {
-    return _fetchSingleCell('Splash', 'A9:A9');
+  Future<String> fetchInstaLink() async {
+    return _fetchSingleCell('Splash', 'A6:A6');
   }
 
   Future<String> fetchUpdateLogs() async {
-    return _fetchSingleCell('Splash', 'A10:A10');
+    return _fetchSingleCell('Splash', 'A7:A7');
   }
 
-  Future<String> fetchAppMetaLink() async {
-    return _fetchSingleCell('Splash', 'A11:A11');
-  }
 
   // ─────────────────────────────────────────────
   // CLEAR CACHE
@@ -323,6 +312,14 @@ Future<List<Product>> fetchProducts({bool forceRefresh = false}) {
   return sheets.fetchProducts(forceRefresh: forceRefresh);
 }
 
+Future<String> fetchAppMetaName() {
+  return sheets.fetchDeveloperName();
+}
+
+Future<String> fetchAppMetaDate() {
+  return sheets.fetchLastUpdateDate();
+}
+
 Future<String> fetchMobileNumber() {
   return sheets.fetchMobileNumber();
 }
@@ -331,18 +328,10 @@ Future<({String qrImageUrl, String upiId})> fetchUpiData() {
   return sheets.fetchUpiData();
 }
 
-Future<String> fetchAppMetaDate() {
-  return sheets.fetchAppMetaDate();
-}
-
-Future<String> fetchAppMetaName() {
-  return sheets.fetchAppMetaName();
+Future<String> fetchAppMetaLink() {
+  return sheets.fetchInstaLink();
 }
 
 Future<String> fetchUpdateLogs() {
   return sheets.fetchUpdateLogs();
-}
-
-Future<String> fetchAppMetaLink() {
-  return sheets.fetchAppMetaLink();
 }
