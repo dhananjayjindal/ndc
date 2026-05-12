@@ -384,17 +384,75 @@ class CartScreen extends StatelessWidget {
           const SizedBox(height: 10),
 
           // CLEAR BUTTON
-          SizedBox(
+         SizedBox(
             width: double.infinity,
             child: FilledButton.tonal(
-              onPressed: cart.itemCount == 0 ? null : () => cart.clear(),
+              onPressed:
+                  cart.itemCount ==
+                      0
+                  ? null
+                  : () async {
+                      final confirm =
+                          await showDialog<
+                            bool
+                          >(
+                            context: context,
+                            builder:
+                                (
+                                  context,
+                                ) => AlertDialog(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(
+                                      20,
+                                    ),
+                                  ),
+                                  title: const Text(
+                                    'Clear Cart?',
+                                  ),
+                                  content: const Text(
+                                    'Are you sure you want to remove all items from the cart?',
+                                  ),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () => Navigator.pop(
+                                        context,
+                                        false,
+                                      ),
+                                      child: const Text(
+                                        'Cancel',
+                                      ),
+                                    ),
+                                    FilledButton(
+                                      onPressed: () => Navigator.pop(
+                                        context,
+                                        true,
+                                      ),
+                                      child: const Text(
+                                        'Clear',
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                          );
+
+                      if (confirm ==
+                          true) {
+                        cart.clear();
+                      }
+                    },
               style: FilledButton.styleFrom(
-                padding: const EdgeInsets.symmetric(vertical: 16),
+                padding: const EdgeInsets.symmetric(
+                  vertical: 16,
+                ),
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
+                  borderRadius: BorderRadius.circular(
+                    20,
+                  ),
                 ),
               ),
-              child: const Text('Clear Cart'),
+              child: const Text(
+                'Clear Cart',
+              ),
             ),
           ),
         ],

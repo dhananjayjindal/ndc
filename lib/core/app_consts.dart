@@ -19,6 +19,9 @@ class AppColors {
   static const dontKnow2 = Colors.green;
 
   static const double homePageIconSize = 20;
+  static const double productNameFontSize = 20;
+  static const double productPriceFontSize = 16;
+  static const double productSalePriceFontSize = 14;
 }
 
 class Responsive {

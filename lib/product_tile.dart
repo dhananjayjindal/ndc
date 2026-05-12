@@ -215,73 +215,92 @@ class ProductGridCard extends StatelessWidget {
                   ],
                 ),
               ),
-
               // CONTENT
               Expanded(
-                flex: 4,
-
+                flex: 5,
                 child: Padding(
                   padding: const EdgeInsets.all(16),
-
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-
+                  child: Stack(
                     children: [
-                      // TITLE
-                      Text(
-                        product.name,
-
-                        maxLines: 1,
-
-                        overflow: TextOverflow.ellipsis,
-
-                        style: theme.textTheme.titleMedium?.copyWith(
-                          fontWeight: FontWeight.w700,
-                          height: 1.3,
-                        ),
-                      ),
-
-                      const Spacer(),
-
-                      // PRICE
-                      Row(
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          // TITLE
                           Text(
-                            '₹ ${hasSale ? product.salePrice : product.price}',
-
-                            style: theme.textTheme.titleLarge?.copyWith(
-                              fontWeight: FontWeight.w900,
+                            product.name,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: theme.textTheme.titleMedium?.copyWith(
+                              fontWeight: FontWeight.w700,
+                              height: 1.3,
+                              fontSize: AppColors.productNameFontSize,
                             ),
                           ),
 
-                          if (hasSale) ...[
-                            const SizedBox(width: 8),
+                          const Spacer(),
 
-                            Text(
-                              '₹ ${product.price}',
-
-                              style: theme.textTheme.bodySmall?.copyWith(
-                                decoration: TextDecoration.lineThrough,
-                                color: Colors.white38,
+                          // PRICE
+                          Row(
+                            children: [
+                              Text(
+                                '₹ ${hasSale ? product.salePrice : product.price}',
+                                style: theme.textTheme.titleLarge?.copyWith(
+                                  fontWeight: FontWeight.w900,
+                                  fontSize: AppColors.productPriceFontSize,
+                                ),
                               ),
+
+                              if (hasSale) ...[
+                                const SizedBox(width: 8),
+                                Text(
+                                  '₹ ${product.price}',
+                                  style: theme.textTheme.bodySmall?.copyWith(
+                                    decoration: TextDecoration.lineThrough,
+                                    color: Colors.white38,
+                                    fontSize:
+                                        AppColors.productSalePriceFontSize,
+                                  ),
+                                ),
+                              ],
+                            ],
+                          ),
+
+                          const Spacer(),
+
+                          // TAGS
+                          if (product.tags.isNotEmpty)
+                            Wrap(
+                              spacing: 6,
+                              runSpacing: 6,
+                              children: product.tags
+                                  .take(3)
+                                  .map((e) => appTagChip(context, e))
+                                  .toList(),
                             ),
-                          ],
                         ],
                       ),
 
-                      const SizedBox(height: 10),
-
-                      // TAGS
-                      if (product.tags.isNotEmpty)
-                        Wrap(
-                          spacing: 6,
-                          runSpacing: 6,
-
-                          children: product.tags
-                              .take(3)
-                              .map((e) => appTagChip(context, e))
-                              .toList(),
+                      Positioned(
+                        right: 0,
+                        bottom: 0,
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 8,
+                            vertical: 6,
+                          ),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(14),
+                            color: Colors.white.withValues(alpha: 0.05),
+                          ),
+                          child: Text(
+                            '#${product.id}',
+                            style: const TextStyle(
+                              fontWeight: FontWeight.w700,
+                              fontSize: 10,
+                            ),
+                          ),
                         ),
+                      ),
                     ],
                   ),
                 ),
@@ -411,25 +430,11 @@ class ProductListCard extends StatelessWidget {
                         style: theme.textTheme.titleLarge?.copyWith(
                           fontWeight: FontWeight.w800,
                           height: 1.25,
+                          fontSize: AppColors.productNameFontSize,
                         ),
                       ),
 
-                      const SizedBox(height: 10),
-
-                      // TAGS
-                      if (product.tags.isNotEmpty)
-                        Wrap(
-                          spacing: 6,
-                          runSpacing: 6,
-
-                          children: product.tags
-                              .take(4)
-                              .map((e) => appTagChip(context, e))
-                              .toList(),
-                        ),
-
                       const Spacer(),
-
                       // PRICE
                       Row(
                         children: [
@@ -438,6 +443,7 @@ class ProductListCard extends StatelessWidget {
 
                             style: theme.textTheme.headlineSmall?.copyWith(
                               fontWeight: FontWeight.w900,
+                              fontSize: AppColors.productPriceFontSize,
                             ),
                           ),
 
@@ -450,10 +456,28 @@ class ProductListCard extends StatelessWidget {
                               style: theme.textTheme.bodyMedium?.copyWith(
                                 decoration: TextDecoration.lineThrough,
                                 color: Colors.white38,
+                                fontSize: AppColors.productSalePriceFontSize,
                               ),
                             ),
                           ],
+                        ],
+                      ),
+                      const Spacer(),
+                      Row(
+                        children: [
+                          const SizedBox(height: 10),
 
+                          // TAGS
+                          if (product.tags.isNotEmpty)
+                            Wrap(
+                              spacing: 6,
+                              runSpacing: 6,
+
+                              children: product.tags
+                                  .take(4)
+                                  .map((e) => appTagChip(context, e))
+                                  .toList(),
+                            ),
                           const Spacer(),
 
                           Container(
@@ -473,7 +497,7 @@ class ProductListCard extends StatelessWidget {
 
                               style: const TextStyle(
                                 fontWeight: FontWeight.w700,
-                                fontSize: 11,
+                                fontSize: 10,
                               ),
                             ),
                           ),

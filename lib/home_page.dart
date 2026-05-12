@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 import 'app_logger.dart';
@@ -558,6 +559,22 @@ class _HomePageState
       ),
 
       actions: [
+        _appBarButton(icon: Icons.camera_alt_outlined, onTap: () async {
+          AppLogger.i(
+            '[HomePage] Instagram Button Pressed',
+          );
+
+          final uri = Uri.parse(
+            'https://www.instagram.com/navdurgacollections_bathinda',
+          );
+
+          if (await canLaunchUrl(uri)) {
+            await launchUrl(
+              uri,
+              mode: LaunchMode.externalApplication,
+            );
+          }
+        }),
         _appBarButton(
           icon: Icons.fact_check_outlined,
 
@@ -704,34 +721,50 @@ class _HomePageState
     required IconData icon,
     required VoidCallback onTap,
   }) {
+    final isInstagram =
+        icon ==
+        Icons.camera_alt_outlined;
+
     return Padding(
       padding: const EdgeInsets.only(
         right: 10,
       ),
-
       child: InkWell(
         borderRadius: BorderRadius.circular(
           18,
         ),
-
         onTap: onTap,
-
         child: Container(
           width: 48,
           height: 48,
-
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(
               18,
             ),
-
-            color: Colors.white.withValues(
-              alpha: 0.06,
-            ),
+            gradient: isInstagram
+                ? const LinearGradient(
+                    colors: [
+                      Color(
+                        0xFFF58529,
+                      ),
+                      Color(
+                        0xFFDD2A7B,
+                      ),
+                      Color(
+                        0xFF8134AF,
+                      ),
+                    ],
+                  )
+                : null,
+            color: isInstagram
+                ? null
+                : Colors.white.withValues(
+                    alpha: 0.06,
+                  ),
           ),
-
           child: Icon(
             icon,
+            color: Colors.white,
           ),
         ),
       ),
@@ -847,8 +880,28 @@ class _HomePageState
               4,
             );
 
+    const spacing = 16.0;
+    const horizontalPadding = 32.0; // if your page has 16 left + 16 right padding
+
+    final itemWidth =
+        (width -
+            horizontalPadding -
+            ((crossAxisCount -
+                    1) *
+                spacing)) /
+        crossAxisCount;
+
+    // Dynamic height logic
+    final itemHeight =
+        itemWidth *
+        1.75; // tweak multiplier for desired card height
+
+    final aspectRatio =
+        itemWidth /
+        itemHeight;
+
     AppLogger.d(
-      '[HomePage] Grid Build → Count: ${filtered.length}',
+      '[HomePage] Grid Build → Count: ${filtered.length}, Width: $itemWidth, AR: $aspectRatio',
     );
 
     return SliverGrid(
@@ -867,21 +920,11 @@ class _HomePageState
         },
         childCount: filtered.length,
       ),
-
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: crossAxisCount,
-
-        crossAxisSpacing: 16,
-
-        mainAxisSpacing: 16,
-
-        childAspectRatio:
-            MediaQuery.of(
-                  context,
-                ).size.width <
-                400
-            ? 0.56
-            : 0.64,
+        crossAxisSpacing: spacing,
+        mainAxisSpacing: spacing,
+        childAspectRatio: aspectRatio,
       ),
     );
   }
